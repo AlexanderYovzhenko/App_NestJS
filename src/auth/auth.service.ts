@@ -102,13 +102,13 @@ export class AuthService {
   }
 
   private async hashPassword(password: string) {
-    const saltRounds = process.env.SALT_ROUNDS;
+    const saltRounds = process.env.SALT_ROUNDS || '10';
 
     const salt = await bcrypt.genSalt(parseInt(saltRounds));
 
-    const hash = await bcrypt.hash(password, salt);
+    const hashPassword = await bcrypt.hash(password, salt);
 
-    return hash;
+    return hashPassword;
   }
 
   private async checkHashPassword(password: string, user: User) {
