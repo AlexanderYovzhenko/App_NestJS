@@ -16,7 +16,12 @@ import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { AllExceptionsFilter } from 'src/exception-filters/all-exceptions.filter';
 import { AuthGuard } from 'src/guards/jwt-auth.guard';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Roles } from 'src/guards/role-auth.decorator';
 import { RoleGuard } from 'src/guards/role.guard';
 import { BanUserDto } from './dto/ban-user.dto';
@@ -24,6 +29,7 @@ import { DeBanUserDto } from './dto/de-ban-user.dto';
 import { RoleOrSelfUserGuard } from '../guards/role-or-self-user.guard';
 
 @ApiTags('Profile')
+@ApiBearerAuth()
 @UseFilters(AllExceptionsFilter)
 @Controller()
 export class ProfileController {
@@ -31,6 +37,7 @@ export class ProfileController {
 
   @ApiOperation({ summary: 'Создать пользователя' })
   @ApiResponse({ status: HttpStatus.CREATED })
+  // @ApiResponse({ status: HttpStatus.CREATED, type: CreateProfileDto })
   @Post('registration')
   createProfile(@Body() createProfileDto: CreateProfileDto) {
     return this.profileService.createProfile(createProfileDto);
