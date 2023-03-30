@@ -72,8 +72,10 @@ export class AuthService {
   }
 
   async updateUser(email: string, password: string, id: number) {
+    const hashPassword = await this.hashPassword(password);
+
     await this.userRepository.update(
-      { email, password },
+      { email, password: hashPassword },
       { where: { user_id: id } },
     );
   }
