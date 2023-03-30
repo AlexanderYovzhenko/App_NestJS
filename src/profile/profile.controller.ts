@@ -21,6 +21,7 @@ import { Roles } from 'src/roles/role-auth.decorator';
 import { RoleGuard } from 'src/roles/role.guard';
 import { BanUserDto } from './dto/ban-user.dto';
 import { DeBanUserDto } from './dto/de-ban-user.dto';
+import { RoleOrSelfUserGuard } from './role-or-self-user.quard';
 
 @ApiTags('Profile')
 @UseFilters(AllExceptionsFilter)
@@ -37,8 +38,6 @@ export class ProfileController {
 
   @ApiOperation({ summary: 'Получить всех пользователей' })
   @ApiResponse({ status: HttpStatus.OK })
-  // @Roles('ADMIN')
-  // @UseGuards(RoleGuard)
   @UseGuards(AuthGuard)
   @Get('profile')
   getAll() {
@@ -47,8 +46,6 @@ export class ProfileController {
 
   @ApiOperation({ summary: 'Получить пользователя' })
   @ApiResponse({ status: HttpStatus.OK })
-  // @Roles('ADMIN')
-  // @UseGuards(RoleGuard)
   @UseGuards(AuthGuard)
   @Get('profile/:id')
   getOne(@Param('id') id: string) {
@@ -58,11 +55,9 @@ export class ProfileController {
   @ApiOperation({ summary: 'Обновить профиль' })
   @ApiResponse({ status: HttpStatus.CREATED })
   @Roles('ADMIN')
-  @UseGuards(RoleGuard)
-  @HttpCode(HttpStatus.CREATED)
-  @Roles('ADMIN')
-  @UseGuards(RoleGuard)
+  @UseGuards(RoleOrSelfUserGuard)
   @UseGuards(AuthGuard)
+  @HttpCode(HttpStatus.CREATED)
   @Put('profile/:id')
   update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
     return this.profileService.update(+id, updateProfileDto);
@@ -71,18 +66,16 @@ export class ProfileController {
   @ApiOperation({ summary: 'Удалить профиль' })
   @ApiResponse({ status: HttpStatus.NO_CONTENT })
   @Roles('ADMIN')
-  @UseGuards(RoleGuard)
-  @HttpCode(HttpStatus.NO_CONTENT)
-  @Roles('ADMIN')
-  @UseGuards(RoleGuard)
+  @UseGuards(RoleOrSelfUserGuard)
   @UseGuards(AuthGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete('profile/:id')
   remove(@Param('id') id: string) {
     return this.profileService.remove(+id);
   }
 
   @ApiOperation({ summary: 'Забанить пользователя' })
-  @ApiResponse({ status: 201 })
+  @ApiResponse({ status: HttpStatus.CREATED })
   @Roles('ADMIN')
   @UseGuards(RoleGuard)
   @UseGuards(AuthGuard)
@@ -92,7 +85,7 @@ export class ProfileController {
   }
 
   @ApiOperation({ summary: 'Разбанить пользователя' })
-  @ApiResponse({ status: 201 })
+  @ApiResponse({ status: HttpStatus.CREATED })
   @Roles('ADMIN')
   @UseGuards(RoleGuard)
   @UseGuards(AuthGuard)

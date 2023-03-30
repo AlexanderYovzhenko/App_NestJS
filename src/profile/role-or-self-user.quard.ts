@@ -7,10 +7,10 @@ import {
 import { Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from './role-auth.decorator';
+import { ROLES_KEY } from 'src/roles/role-auth.decorator';
 
 @Injectable()
-export class RoleGuard implements CanActivate {
+export class RoleOrSelfUserGuard implements CanActivate {
   constructor(private jwtService: JwtService, private reflector: Reflector) {}
 
   canActivate(
@@ -33,9 +33,15 @@ export class RoleGuard implements CanActivate {
       const user = this.jwtService.verify(token);
       request.user = user;
 
+      const userId = +user.user_id;
+      const resourceId = +request.params.id;
+
       // Check if the user has permission to access the resource
-      return user.roles.some((role: { value: string }) =>
-        requiredRoles.includes(role.value),
+      return (
+        userId === resourceId ||
+        user.roles.some((role: { value: string }) =>
+          requiredRoles.includes(role.value),
+        )
       );
     } catch (e) {
       throw new ForbiddenException({
