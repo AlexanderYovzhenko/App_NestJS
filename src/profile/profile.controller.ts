@@ -37,7 +37,6 @@ export class ProfileController {
 
   @ApiOperation({ summary: 'Создать пользователя' })
   @ApiResponse({ status: HttpStatus.CREATED })
-  // @ApiResponse({ status: HttpStatus.CREATED, type: CreateProfileDto })
   @Post('registration')
   createProfile(@Body() createProfileDto: CreateProfileDto) {
     return this.profileService.createProfile(createProfileDto);
