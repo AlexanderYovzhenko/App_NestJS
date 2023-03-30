@@ -15,13 +15,13 @@ import { ProfileService } from './profile.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { AllExceptionsFilter } from 'src/exception-filters/all-exceptions.filter';
-import { AuthGuard } from 'src/auth/jwt-auth.guard';
+import { AuthGuard } from 'src/guards/jwt-auth.guard';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Roles } from 'src/roles/role-auth.decorator';
-import { RoleGuard } from 'src/roles/role.guard';
+import { Roles } from 'src/guards/role-auth.decorator';
+import { RoleGuard } from 'src/guards/role.guard';
 import { BanUserDto } from './dto/ban-user.dto';
 import { DeBanUserDto } from './dto/de-ban-user.dto';
-import { RoleOrSelfUserGuard } from './role-or-self-user.quard';
+import { RoleOrSelfUserGuard } from '../guards/role-or-self-user.guard';
 
 @ApiTags('Profile')
 @UseFilters(AllExceptionsFilter)

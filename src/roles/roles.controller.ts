@@ -15,12 +15,12 @@ import { RolesService } from './roles.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Roles } from './role-auth.decorator';
-import { RoleGuard } from './role.guard';
+import { Roles } from '../guards/role-auth.decorator';
+import { RoleGuard } from '../guards/role.guard';
 import { AddRoleDto } from './dto/add-role.dto';
 import { AllExceptionsFilter } from 'src/exception-filters/all-exceptions.filter';
 import { RemoveRoleDto } from './dto/remove-role.dto';
-import { AuthGuard } from 'src/auth/jwt-auth.guard';
+import { AuthGuard } from 'src/guards/jwt-auth.guard';
 
 @ApiTags('Role')
 @UseFilters(AllExceptionsFilter)
