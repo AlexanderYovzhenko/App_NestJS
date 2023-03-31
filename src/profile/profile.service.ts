@@ -87,15 +87,34 @@ export class ProfileService {
   }
 
   async update(id: number, updateProfileDto: UpdateProfileDto) {
-    const { email, password, firstName, lastName, phone, city } =
-      updateProfileDto;
+    const {
+      email,
+      password,
+      confirmPassword,
+      firstName,
+      lastName,
+      phone,
+      city,
+    } = updateProfileDto;
 
-    const profile = await this.profileRepository.findOne({
+    const isProfile = await this.profileRepository.findOne({
       where: { user_id: id },
     });
 
-    if (!profile) {
+    if (!isProfile) {
       throw new HttpException('Profile not found', HttpStatus.NOT_FOUND);
+    }
+
+    const isConfirmPassword = this.checkConfirmPassword(
+      password,
+      confirmPassword,
+    );
+
+    if (confirmPassword && !isConfirmPassword) {
+      throw new HttpException(
+        'Password and password confirmation are not coincide',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const isPhone = await this.checkPhone(phone);
@@ -179,7 +198,10 @@ export class ProfileService {
     return user;
   }
 
-  private checkConfirmPassword(password: string, confirmPassword: string) {
+  private checkConfirmPassword(
+    password: string,
+    confirmPassword: string | undefined,
+  ) {
     return password === confirmPassword;
   }
 
