@@ -9,33 +9,29 @@ import { LoggingInterceptor } from './utils/logger.middleware';
 import { AllExceptionsFilter } from './exception-filters/all-exceptions.filter';
 
 async function bootstrap() {
-  try {
-    const app = await NestFactory.create(AppModule, {
-      logger: loggerWinston,
-    });
+  const app = await NestFactory.create(AppModule, {
+    logger: loggerWinston,
+  });
 
-    app.useGlobalInterceptors(new LoggingInterceptor());
-    app.enableCors();
+  app.useGlobalInterceptors(new LoggingInterceptor());
+  app.enableCors();
 
-    app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-        transform: true,
-      }),
-    );
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+    }),
+  );
 
-    const httpAdapter = app.get(HttpAdapterHost);
-    app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
+  const httpAdapter = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 
-    const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('/api/docs', app, document);
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('/api/docs', app, document);
 
-    await app.listen(PORT, '0.0.0.0', () => {
-      console.info(`Server is running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error('\n', error.message, '\n\n', error);
-  }
+  await app.listen(PORT, '0.0.0.0', () => {
+    console.info(`Server is running on port ${PORT}`);
+  });
 }
 
 bootstrap();
