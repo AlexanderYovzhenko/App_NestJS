@@ -60,9 +60,9 @@ export class RolesController {
 
   @ApiOperation({ summary: 'Обновить роль' })
   @ApiResponse({ status: HttpStatus.CREATED })
-  @HttpCode(HttpStatus.CREATED)
   @Roles('ADMIN')
   @UseGuards(RoleGuard)
+  @HttpCode(HttpStatus.CREATED)
   @Put('roles/:value')
   update(@Param('value') value: string, @Body() updateRole: UpdateRoleDto) {
     return this.rolesService.updateRole(value, updateRole);
@@ -70,9 +70,9 @@ export class RolesController {
 
   @ApiOperation({ summary: 'Удалить роль' })
   @ApiResponse({ status: HttpStatus.NO_CONTENT })
-  @HttpCode(HttpStatus.NO_CONTENT)
   @Roles('ADMIN')
   @UseGuards(RoleGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete('roles/:value')
   remove(@Param('value') value: string) {
     return this.rolesService.removeRole(value);
