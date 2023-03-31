@@ -6,7 +6,6 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
-import { ApiProperty } from '@nestjs/swagger';
 import { Profile } from '../../profile/entities/profile.entity';
 import { Role } from 'src/roles/entities/role.entity';
 import { UserRole } from 'src/roles/entities/user-role.entity';
