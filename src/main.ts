@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, HttpAdapterHost } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { PORT } from './common/env-variables';
 import { SwaggerModule } from '@nestjs/swagger';
@@ -6,6 +6,7 @@ import { config } from './docs/doc-config';
 import { ValidationPipe } from '@nestjs/common/pipes';
 import { loggerWinston } from './utils/logger-winston.config';
 import { LoggingInterceptor } from './utils/logger.middleware';
+import { AllExceptionsFilter } from './exception-filters/all-exceptions.filter';
 
 async function bootstrap() {
   try {
@@ -22,6 +23,9 @@ async function bootstrap() {
         transform: true,
       }),
     );
+
+    const httpAdapter = app.get(HttpAdapterHost);
+    app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('/api/docs', app, document);

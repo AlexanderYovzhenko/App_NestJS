@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
@@ -7,6 +8,7 @@ import { RolesModule } from './roles/roles.module';
 import { Dialect } from 'sequelize';
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
+import { AllExceptionsFilter } from './exception-filters/all-exceptions.filter';
 
 @Module({
   imports: [
@@ -30,6 +32,12 @@ import { ProfileModule } from './profile/profile.module';
     RolesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+  ],
 })
 export class AppModule {}

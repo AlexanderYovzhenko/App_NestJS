@@ -9,7 +9,6 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
-  UseFilters,
 } from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { CreateRoleDto } from './dto/create-role.dto';
@@ -23,13 +22,11 @@ import {
 import { Roles } from '../guards/role-auth.decorator';
 import { RoleGuard } from '../guards/role.guard';
 import { AddRoleDto } from './dto/add-role.dto';
-import { AllExceptionsFilter } from 'src/exception-filters/all-exceptions.filter';
 import { RemoveRoleDto } from './dto/remove-role.dto';
 import { AuthGuard } from 'src/guards/jwt-auth.guard';
 
 @ApiTags('Role')
 @ApiBearerAuth()
-@UseFilters(AllExceptionsFilter)
 @UseGuards(AuthGuard)
 @Controller()
 export class RolesController {

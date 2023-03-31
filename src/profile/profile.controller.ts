@@ -9,12 +9,10 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
-  UseFilters,
 } from '@nestjs/common';
 import { ProfileService } from './profile.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
-import { AllExceptionsFilter } from 'src/exception-filters/all-exceptions.filter';
 import { AuthGuard } from 'src/guards/jwt-auth.guard';
 import {
   ApiBearerAuth,
@@ -30,7 +28,6 @@ import { RoleOrSelfUserGuard } from '../guards/role-or-self-user.guard';
 
 @ApiTags('Profile')
 @ApiBearerAuth()
-@UseFilters(AllExceptionsFilter)
 @Controller()
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
