@@ -18,7 +18,6 @@ interface UserCreationAttrs {
 
 @Table({ tableName: 'user' })
 export class User extends Model<User, UserCreationAttrs> {
-  @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -27,11 +26,9 @@ export class User extends Model<User, UserCreationAttrs> {
   })
   user_id: number;
 
-  @ApiProperty({ example: 'user@mail.ru', description: 'Почтовый адрес' })
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   email: string;
 
-  @ApiProperty({ example: '12345678', description: 'Пароль' })
   @Column({ type: DataType.STRING, allowNull: false })
   password: string;
 
