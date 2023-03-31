@@ -24,7 +24,7 @@ export class RolesService {
     });
 
     if (role) {
-      throw new HttpException('Role already exists!', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Role already exists', HttpStatus.BAD_REQUEST);
     }
 
     const { value, description } = createRole;
@@ -49,7 +49,7 @@ export class RolesService {
     const role = await this.roleRepository.findOne({ where: { value } });
 
     if (!role) {
-      throw new HttpException('Роль не найдена', HttpStatus.NOT_FOUND);
+      throw new HttpException('Role not found', HttpStatus.NOT_FOUND);
     }
 
     return role;
@@ -63,7 +63,7 @@ export class RolesService {
     });
 
     if (!role) {
-      throw new HttpException('Роль не найдена', HttpStatus.NOT_FOUND);
+      throw new HttpException('Role not found', HttpStatus.NOT_FOUND);
     }
 
     const isRole = await this.roleRepository.findOne({
@@ -71,7 +71,7 @@ export class RolesService {
     });
 
     if (isRole) {
-      throw new HttpException('Роль уже существует', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Role already exists', HttpStatus.BAD_REQUEST);
     }
 
     const { value, description } = updateRole;
@@ -96,7 +96,7 @@ export class RolesService {
     const role = await this.roleRepository.findOne({ where: { value } });
 
     if (!role) {
-      throw new HttpException('Роль не найдена', HttpStatus.NOT_FOUND);
+      throw new HttpException('Role not found', HttpStatus.NOT_FOUND);
     }
 
     await this.roleRepository.destroy({
@@ -114,13 +114,13 @@ export class RolesService {
     const role = await this.getRoleByValue(addRole.value);
 
     if (!role) {
-      throw new HttpException('Роль не найдена', HttpStatus.NOT_FOUND);
+      throw new HttpException('Role not found', HttpStatus.NOT_FOUND);
     }
 
     const user = await this.authService.getOneUser(addRole.user_id);
 
     if (!user) {
-      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
     await user.$add('role', role.role_id);
@@ -136,13 +136,13 @@ export class RolesService {
     const role = await this.getRoleByValue(removeRole.value);
 
     if (!role) {
-      throw new HttpException('Роль не найдена', HttpStatus.NOT_FOUND);
+      throw new HttpException('Role not found', HttpStatus.NOT_FOUND);
     }
 
     const user = await this.authService.getOneUser(removeRole.user_id);
 
     if (!user) {
-      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
     await user.$remove('role', role.role_id);

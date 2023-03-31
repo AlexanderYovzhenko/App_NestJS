@@ -35,7 +35,7 @@ export class ProfileService {
 
     if (!isConfirmPassword) {
       throw new HttpException(
-        'Confirm password is not correct!',
+        'Password and password confirmation are not coincide',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -43,13 +43,16 @@ export class ProfileService {
     const isPhone = await this.checkPhone(phone);
 
     if (isPhone) {
-      throw new HttpException('Phone already exists!', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Phone number already exists',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const isEmail = await this.authService.checkUserEmail(email);
 
     if (isEmail) {
-      throw new HttpException('Email already exists!', HttpStatus.BAD_REQUEST);
+      throw new HttpException('E-mail already exists', HttpStatus.BAD_REQUEST);
     }
 
     const newUser = await this.authService.createUser(email, password);
@@ -77,7 +80,7 @@ export class ProfileService {
     const profile = await this.authService.getOneUser(id);
 
     if (!profile) {
-      throw new HttpException('Profile is not find!', HttpStatus.NOT_FOUND);
+      throw new HttpException('Profile not found', HttpStatus.NOT_FOUND);
     }
 
     return profile;
@@ -92,19 +95,22 @@ export class ProfileService {
     });
 
     if (!profile) {
-      throw new HttpException('Profile is not find!', HttpStatus.NOT_FOUND);
+      throw new HttpException('Profile not found', HttpStatus.NOT_FOUND);
     }
 
     const isPhone = await this.checkPhone(phone);
 
     if (isPhone) {
-      throw new HttpException('Phone already exists!', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Phone number already exists',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const isEmail = await this.authService.checkUserEmail(email);
 
     if (isEmail) {
-      throw new HttpException('Email already exists!', HttpStatus.BAD_REQUEST);
+      throw new HttpException('E-mail already exists', HttpStatus.BAD_REQUEST);
     }
 
     await this.authService.updateUser(email, password, id);
@@ -125,7 +131,7 @@ export class ProfileService {
     });
 
     if (!profile) {
-      throw new HttpException('Profile is not find!', HttpStatus.NOT_FOUND);
+      throw new HttpException('Profile not found', HttpStatus.NOT_FOUND);
     }
 
     const removeUser = await this.authService.removeUser(id);
@@ -141,7 +147,7 @@ export class ProfileService {
     });
 
     if (!profile) {
-      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
     profile.banned = true;
@@ -160,7 +166,7 @@ export class ProfileService {
     });
 
     if (!profile) {
-      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
     profile.banned = false;
