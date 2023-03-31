@@ -17,7 +17,7 @@ interface ProfileCreationAttrs {
   user_id: number;
 }
 
-@Table({ tableName: 'profile', timestamps: false })
+@Table({ tableName: 'profile' })
 export class Profile extends Model<Profile, ProfileCreationAttrs> {
   @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
   @Column({

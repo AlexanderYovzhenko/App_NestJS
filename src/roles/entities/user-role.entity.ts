@@ -8,7 +8,7 @@ import {
 import { Role } from './role.entity';
 import { User } from 'src/auth/entities/user.entity';
 
-@Table({ tableName: 'user_role', createdAt: false, updatedAt: false })
+@Table({ tableName: 'user_role', timestamps: false })
 export class UserRole extends Model<UserRole> {
   @Column({
     type: DataType.INTEGER,
