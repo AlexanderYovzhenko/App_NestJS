@@ -17,6 +17,7 @@ export class RolesService {
     private authService: AuthService,
   ) {}
 
+  // create role to table role
   async createRole(createRole: CreateRoleDto) {
     const role = await this.roleRepository.findOne({
       where: { value: createRole.value.toLocaleLowerCase() },
@@ -108,6 +109,7 @@ export class RolesService {
     return;
   }
 
+  // set role and user to table UserRole
   async addRoleToUser(addRole: AddRoleDto) {
     const role = await this.getRoleByValue(addRole.value);
 
@@ -129,6 +131,7 @@ export class RolesService {
     return userRoles;
   }
 
+  // delete role and user to table UserRole
   async removeRoleToUser(removeRole: RemoveRoleDto) {
     const role = await this.getRoleByValue(removeRole.value);
 

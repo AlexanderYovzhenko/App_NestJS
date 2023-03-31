@@ -28,18 +28,26 @@ export class RoleGuard implements CanActivate {
 
       const request = context.switchToHttp().getRequest();
       const autHeader = request.headers.authorization || request.headers.header;
-      const token = autHeader.split(' ')[1];
+      const [type, token] = autHeader.split(' ');
 
+      // check has token and type token
+      if (type !== 'Bearer' || !token) {
+        throw new ForbiddenException({
+          message: 'Forbidden resource',
+        });
+      }
+
+      // check is correct token
       const user = this.jwtService.verify(token);
       request.user = user;
 
-      // Check if the user has permission to access the resource
+      // check if the user has role for permission to access the resource
       return user.roles.some((role: { value: string }) =>
         requiredRoles.includes(role.value),
       );
-    } catch (e) {
+    } catch (error) {
       throw new ForbiddenException({
-        message: 'Нет доступа',
+        message: 'Forbidden resource',
       });
     }
   }

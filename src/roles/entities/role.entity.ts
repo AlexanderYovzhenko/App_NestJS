@@ -14,7 +14,7 @@ interface RoleCreationAttrs {
   description: string;
 }
 
-@Table({ tableName: 'roles' })
+@Table({ tableName: 'role' })
 export class Role extends Model<Role, RoleCreationAttrs> {
   @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
   @Column({

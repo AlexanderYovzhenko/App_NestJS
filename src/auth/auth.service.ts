@@ -14,19 +14,20 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  // check user email and password and get token
   async checkAuthUser(checkUser: CheckUserDto) {
     const { email, password } = checkUser;
 
     const user = await this.checkUserEmail(email);
 
     if (!user) {
-      throw new ForbiddenException('Wrong login/password combination!');
+      throw new ForbiddenException('Wrong login/password combination');
     }
 
     const isMatch = await this.checkHashPassword(password, user);
 
     if (!isMatch) {
-      throw new ForbiddenException('Wrong login/password combination!');
+      throw new ForbiddenException('Wrong login/password combination');
     }
 
     const token = await this.generateToken(user);
@@ -91,6 +92,7 @@ export class AuthService {
     return true;
   }
 
+  // generation token
   private async generateToken(user: User) {
     const { user_id, email, roles } = user;
 

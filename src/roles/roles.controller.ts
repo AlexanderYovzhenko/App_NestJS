@@ -78,6 +78,7 @@ export class RolesController {
     return this.rolesService.removeRole(value);
   }
 
+  // set role to user
   @ApiOperation({ summary: 'Выдать роль' })
   @ApiResponse({ status: HttpStatus.CREATED })
   @Roles('ADMIN')
@@ -87,6 +88,7 @@ export class RolesController {
     return this.rolesService.addRoleToUser(addRole);
   }
 
+  // delete role to user
   @ApiOperation({ summary: 'Забрать роль' })
   @ApiResponse({ status: HttpStatus.CREATED })
   @Roles('ADMIN')

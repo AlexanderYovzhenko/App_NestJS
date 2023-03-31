@@ -14,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     SequelizeModule.forFeature([User, Role, UserRole]),
     ConfigModule.forRoot({}),
+    // registration JWT
     JwtModule.register({
       secret: process.env.JWT_SECRET_KEY || 'secret_key',
       signOptions: {
