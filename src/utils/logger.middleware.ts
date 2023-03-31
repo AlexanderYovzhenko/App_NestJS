@@ -17,11 +17,15 @@ export class LoggingInterceptor implements NestInterceptor {
     const statusCode = contextRes.statusCode;
     const service = 'App_NestJS';
 
-    const messageLog = `${method} Url:${url} statusCode:${statusCode} params:${JSON.stringify(
+    const messageLog = `method: ${JSON.stringify(
+      method,
+    )}, url: ${JSON.stringify(
+      url,
+    )}, statusCode: ${statusCode}, params: ${JSON.stringify(
       params,
-    )} queryParams:${JSON.stringify(query)} body:${JSON.stringify(
+    )}, queryParams: ${JSON.stringify(query)}, body: ${JSON.stringify(
       body,
-    )} service:${service}`;
+    )} service: ${JSON.stringify(service)}`;
 
     loggerWinston.log(messageLog);
 
@@ -36,7 +40,7 @@ export class LoggingInterceptor implements NestInterceptor {
             params,
           )}, queryParams: ${JSON.stringify(query)}, body: ${JSON.stringify(
             body,
-          )}, service: ${service}`;
+          )}, service: ${JSON.stringify(service)}`;
 
           loggerWinston.error(messageLogErr);
 
