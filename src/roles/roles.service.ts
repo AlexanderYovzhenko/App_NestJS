@@ -5,7 +5,7 @@ import { AddRoleDto } from './dto/add-role.dto';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { Role } from './entities/role.entity';
-import { HttpException } from '@nestjs/common/exceptions';
+import { HttpException, NotFoundException } from '@nestjs/common/exceptions';
 import { AuthService } from 'src/auth/auth.service';
 import { RemoveRoleDto } from './dto/remove-role.dto';
 
@@ -48,7 +48,7 @@ export class RolesService {
     const role = await this.roleRepository.findOne({ where: { value } });
 
     if (!role) {
-      throw new HttpException('Role not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Role not found');
     }
 
     return role;
@@ -62,7 +62,7 @@ export class RolesService {
     });
 
     if (!role) {
-      throw new HttpException('Role not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Role not found');
     }
 
     const isRole = await this.roleRepository.findOne({
@@ -95,7 +95,7 @@ export class RolesService {
     const role = await this.roleRepository.findOne({ where: { value } });
 
     if (!role) {
-      throw new HttpException('Role not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Role not found');
     }
 
     await this.roleRepository.destroy({
@@ -113,13 +113,13 @@ export class RolesService {
     const role = await this.getRoleByValue(addRole.value);
 
     if (!role) {
-      throw new HttpException('Role not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Role not found');
     }
 
     const user = await this.authService.getOneUser(addRole.user_id);
 
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('User not found');
     }
 
     await user.$add('role', role.role_id);
@@ -135,13 +135,13 @@ export class RolesService {
     const role = await this.getRoleByValue(removeRole.value);
 
     if (!role) {
-      throw new HttpException('Role not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Role not found');
     }
 
     const user = await this.authService.getOneUser(removeRole.user_id);
 
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('User not found');
     }
 
     await user.$remove('role', role.role_id);

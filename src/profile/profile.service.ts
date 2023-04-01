@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
-import { HttpException } from '@nestjs/common/exceptions';
+import { HttpException, NotFoundException } from '@nestjs/common/exceptions';
 import { InjectModel } from '@nestjs/sequelize';
 import { Repository } from 'sequelize-typescript';
 import { AuthService } from 'src/auth/auth.service';
@@ -80,7 +80,7 @@ export class ProfileService {
     const profile = await this.authService.getOneUser(id);
 
     if (!profile) {
-      throw new HttpException('Profile not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Profile not found');
     }
 
     return profile;
@@ -102,7 +102,7 @@ export class ProfileService {
     });
 
     if (!isProfile) {
-      throw new HttpException('Profile not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Profile not found');
     }
 
     const isConfirmPassword = this.checkConfirmPassword(
@@ -150,7 +150,7 @@ export class ProfileService {
     });
 
     if (!profile) {
-      throw new HttpException('Profile not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Profile not found');
     }
 
     const removeUser = await this.authService.removeUser(id);
@@ -166,7 +166,7 @@ export class ProfileService {
     });
 
     if (!profile) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('User not found');
     }
 
     profile.banned = true;
@@ -185,7 +185,7 @@ export class ProfileService {
     });
 
     if (!profile) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('User not found');
     }
 
     profile.banned = false;
