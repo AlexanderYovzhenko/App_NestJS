@@ -10,6 +10,15 @@ import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
 import { AllExceptionsFilter } from './exception-filters/all-exceptions.filter';
 import { TextBlockModule } from './text-block/text-block.module';
+import { FileModule } from './file/file.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path';
+import { User } from './auth/entities/user.entity';
+import { Profile } from './profile/entities/profile.entity';
+import { Role } from './roles/entities/role.entity';
+import { TextBlock } from './text-block/entities/text-block.entity';
+import { UserRole } from './roles/entities/user-role.entity';
+import { File } from './file/entities/file.entity';
 
 @Module({
   imports: [
@@ -17,7 +26,6 @@ import { TextBlockModule } from './text-block/text-block.module';
       isGlobal: true,
       envFilePath: ['.env'],
     }),
-    SequelizeModule.forFeature([]),
     SequelizeModule.forRoot({
       dialect: (process.env.DB_DIALECT as Dialect) || 'postgres',
       host: process.env.POSTGRES_HOST || 'localhost',
@@ -25,13 +33,18 @@ import { TextBlockModule } from './text-block/text-block.module';
       username: process.env.POSTGRES_USER || 'postgres',
       password: process.env.POSTGRES_PASSWORD || 'root',
       database: process.env.POSTGRES_DB || 'postgres',
-      models: [],
+      models: [User, Profile, Role, UserRole, File, TextBlock],
       autoLoadModels: true,
+      synchronize: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', 'static'),
     }),
     AuthModule,
     ProfileModule,
     RolesModule,
     TextBlockModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [
