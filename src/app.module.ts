@@ -9,6 +9,7 @@ import { Dialect } from 'sequelize';
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
 import { AllExceptionsFilter } from './exception-filters/all-exceptions.filter';
+import { TextBlockModule } from './text-block/text-block.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AllExceptionsFilter } from './exception-filters/all-exceptions.filter';
     AuthModule,
     ProfileModule,
     RolesModule,
+    TextBlockModule,
   ],
   controllers: [AppController],
   providers: [
