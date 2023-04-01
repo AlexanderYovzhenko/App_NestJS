@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, ValidateIf, Length } from 'class-validator';
+import { IsNotEmpty, IsString, Length } from 'class-validator';
 
 export class CreateTextBlockDto {
   @ApiProperty({ example: 'News IT', description: 'Название' })
@@ -7,12 +7,6 @@ export class CreateTextBlockDto {
   @IsString({ message: 'name: должен быть строкой' })
   @Length(2, 64, { message: 'Не меньше 2 и не больше 64' })
   readonly name: string;
-
-  @ApiProperty({ example: 'image-name', description: 'Файл' })
-  @ValidateIf((o) => o.httpMethod === 'POST')
-  @IsNotEmpty()
-  @IsString({ message: 'image: должен быть строкой' })
-  readonly image?: string;
 
   @ApiProperty({
     example: 'Текст рыба текст рыба текст рыба',

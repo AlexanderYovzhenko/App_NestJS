@@ -9,18 +9,26 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  UseInterceptors,
+  UploadedFile,
+  ParseFilePipe,
 } from '@nestjs/common';
 import { TextBlockService } from './text-block.service';
 import { CreateTextBlockDto } from './dto/create-text-block.dto';
 import { UpdateTextBlockDto } from './dto/update-text-block.dto';
 import {
   ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { Roles } from 'src/guards/role-auth.decorator';
 import { RoleGuard } from 'src/guards/role.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { storageFile } from 'src/file/storage-file';
+import { schema } from './dto/schema-api-body';
 
 @ApiTags('Text Block')
 @ApiBearerAuth()
@@ -30,11 +38,24 @@ export class TextBlockController {
 
   @ApiOperation({ summary: 'Добавить текстовый блок' })
   @ApiResponse({ status: HttpStatus.CREATED })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: schema,
+  })
+  @UseInterceptors(FileInterceptor('file', storageFile))
   @Roles('ADMIN')
   @UseGuards(RoleGuard)
   @Post()
-  create(@Body() createTextBlockDto: CreateTextBlockDto) {
-    return this.textBlockService.create(createTextBlockDto);
+  create(
+    @Body() createTextBlockDto: CreateTextBlockDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        fileIsRequired: true,
+      }),
+    )
+    file: { originalname: string; filename: string },
+  ) {
+    return this.textBlockService.create(createTextBlockDto, file);
   }
 
   @ApiOperation({ summary: 'Получить все текстовые блоки' })
@@ -60,6 +81,11 @@ export class TextBlockController {
 
   @ApiOperation({ summary: 'Обновить текстовый блок' })
   @ApiResponse({ status: HttpStatus.CREATED })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: schema,
+  })
+  @UseInterceptors(FileInterceptor('file', storageFile))
   @Roles('ADMIN')
   @UseGuards(RoleGuard)
   @HttpCode(HttpStatus.CREATED)
@@ -67,8 +93,14 @@ export class TextBlockController {
   update(
     @Param('uniqueName') uniqueName: string,
     @Body() updateTextBlockDto: UpdateTextBlockDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        fileIsRequired: false,
+      }),
+    )
+    file: { originalname: string; filename: string },
   ) {
-    return this.textBlockService.update(uniqueName, updateTextBlockDto);
+    return this.textBlockService.update(uniqueName, updateTextBlockDto, file);
   }
 
   @ApiOperation({ summary: 'Удалить текстовый блок' })
