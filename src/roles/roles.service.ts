@@ -1,11 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Repository } from 'sequelize-typescript';
 import { AddRoleDto } from './dto/add-role.dto';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { Role } from './entities/role.entity';
-import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 import { AuthService } from 'src/auth/auth.service';
 import { RemoveRoleDto } from './dto/remove-role.dto';

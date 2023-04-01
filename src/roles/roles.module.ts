@@ -8,8 +8,8 @@ import { UserRole } from './entities/user-role.entity';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
+  imports: [SequelizeModule.forFeature([Role, User, UserRole]), AuthModule],
   controllers: [RolesController],
   providers: [RolesService],
-  imports: [SequelizeModule.forFeature([Role, User, UserRole]), AuthModule],
 })
 export class RolesModule {}
