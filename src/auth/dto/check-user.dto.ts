@@ -2,7 +2,7 @@ import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CheckUserDto {
-  @ApiProperty({ example: 'admin@gmail.com', description: 'Почта' })
+  @ApiProperty({ example: 'user@gmail.com', description: 'Почта' })
   @IsNotEmpty()
   @IsString({ message: 'email: должен быть строкой' })
   @IsEmail({}, { message: 'Некорректный email' })
