@@ -15,7 +15,7 @@ interface UserCreationAttrs {
   password: string;
 }
 
-@Table({ tableName: 'user' })
+@Table({ tableName: 'user', timestamps: false })
 export class User extends Model<User, UserCreationAttrs> {
   @Column({
     type: DataType.INTEGER,
