@@ -80,7 +80,7 @@ export class RolesController {
   @ApiResponse({ status: HttpStatus.CREATED })
   @Roles('ADMIN')
   @UseGuards(RoleGuard)
-  @Post('/user/role')
+  @Post('/user/add-role')
   addRole(@Body() addRole: AddRoleDto) {
     return this.rolesService.addRoleToUser(addRole);
   }
@@ -90,7 +90,7 @@ export class RolesController {
   @ApiResponse({ status: HttpStatus.CREATED })
   @Roles('ADMIN')
   @UseGuards(RoleGuard)
-  @Post('/user/de-role')
+  @Post('/user/remove-role')
   removeRole(@Body() removeRole: RemoveRoleDto) {
     return this.rolesService.removeRoleToUser(removeRole);
   }

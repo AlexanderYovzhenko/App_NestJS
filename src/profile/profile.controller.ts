@@ -82,7 +82,7 @@ export class ProfileController {
   @Roles('ADMIN')
   @UseGuards(RoleGuard)
   @UseGuards(AuthGuard)
-  @Post('profile/ban')
+  @Post('profile/add-ban')
   ban(@Body() banUser: BanUserDto) {
     return this.profileService.banToUser(banUser);
   }
@@ -92,7 +92,7 @@ export class ProfileController {
   @Roles('ADMIN')
   @UseGuards(RoleGuard)
   @UseGuards(AuthGuard)
-  @Post('profile/de-ban')
+  @Post('profile/remove-ban')
   deBan(@Body() deBanUser: DeBanUserDto) {
     return this.profileService.deBanToUser(deBanUser);
   }
