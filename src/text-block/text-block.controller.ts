@@ -29,9 +29,11 @@ import { RoleGuard } from 'src/guards/role.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { storageFile } from 'src/file/storage-file';
 import { schema } from './dto/schema-api-body';
+import { BanGuard } from 'src/guards/ban-user.guard';
 
 @ApiTags('Text Block')
 @ApiBearerAuth()
+@UseGuards(BanGuard)
 @Controller('text-block')
 export class TextBlockController {
   constructor(private readonly textBlockService: TextBlockService) {}
