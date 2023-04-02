@@ -23,7 +23,7 @@ export class UserGuard implements CanActivate {
       // check has token and type token
       if (type !== 'Bearer' || !token) {
         throw new ForbiddenException({
-          message: 'Forbidden resource',
+          message: 'Only for self',
         });
       }
 
@@ -38,7 +38,7 @@ export class UserGuard implements CanActivate {
       return userId === resourceId;
     } catch (error) {
       throw new ForbiddenException({
-        message: 'Forbidden resource',
+        message: 'Only for self',
       });
     }
   }

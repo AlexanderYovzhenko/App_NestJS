@@ -33,7 +33,7 @@ export class RoleOrSelfUserGuard implements CanActivate {
       // check has token and type token
       if (type !== 'Bearer' || !token) {
         throw new ForbiddenException({
-          message: 'Forbidden resource',
+          message: 'Only for self or for role admin',
         });
       }
 
@@ -53,7 +53,7 @@ export class RoleOrSelfUserGuard implements CanActivate {
       );
     } catch (error) {
       throw new ForbiddenException({
-        message: 'Forbidden resource',
+        message: 'Only for self or for role admin',
       });
     }
   }

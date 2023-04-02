@@ -33,7 +33,7 @@ export class RoleGuard implements CanActivate {
       // check has token and type token
       if (type !== 'Bearer' || !token) {
         throw new ForbiddenException({
-          message: 'Forbidden resource',
+          message: 'Only for role admin',
         });
       }
 
@@ -47,7 +47,7 @@ export class RoleGuard implements CanActivate {
       );
     } catch (error) {
       throw new ForbiddenException({
-        message: 'Forbidden resource',
+        message: 'Only for role admin',
       });
     }
   }
