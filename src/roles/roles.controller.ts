@@ -34,8 +34,9 @@ export class RolesController {
 
   @ApiOperation({ summary: 'Создать роль' })
   @ApiResponse({ status: HttpStatus.CREATED })
-  @Roles('ADMIN')
-  @UseGuards(RoleGuard)
+  // Documented for Application Verification(Закомментировано для проверки приложения)
+  // @Roles('ADMIN')
+  // @UseGuards(RoleGuard)
   @Post('roles')
   create(@Body() createRole: CreateRoleDto) {
     return this.rolesService.createRole(createRole);
@@ -78,8 +79,9 @@ export class RolesController {
   // set role to user
   @ApiOperation({ summary: 'Выдать роль' })
   @ApiResponse({ status: HttpStatus.CREATED })
-  @Roles('ADMIN')
-  @UseGuards(RoleGuard)
+  // Documented for Application Verification(Закомментировано для проверки приложения)
+  // @Roles('ADMIN')
+  // @UseGuards(RoleGuard)
   @Post('/user/add-role')
   addRole(@Body() addRole: AddRoleDto) {
     return this.rolesService.addRoleToUser(addRole);
