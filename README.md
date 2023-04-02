@@ -1,7 +1,15 @@
-# App_NestJS
+
+ <h1 align="center">App_NestJS</h1>
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+</p>
+
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
+
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
@@ -21,55 +29,57 @@
     <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
   <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Application on NestJS(Postgres, Sequelize) for text blocks with registration and authorization 
 
-## Installation
+<p>
+  <h2 align="center">Documentation for endpoints</h2>
+  <h3>Docs <a href="http://localhost:4000/api/docs" target="blank">localhost:4000/doc</a> - detailed documentation</h3>
+  <h3>Home <a href="http://localhost:4000/" target="blank">localhost:4000</a> - home page, check if the server is running</h3>
+</p>
+
+## Downloading
 
 ```bash
-$ npm install
+git clone https://github.com/GoldenManBel/App_NestJS.git
 ```
 
-## Running the app
+## Installing NPM modules
 
 ```bash
-# development
-$ npm run start
+npm install
+```
 
+## Running application
+
+```bash
+running database postgresql
+```
+
+```bash
 # watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run start:dev 
+```
+or
+```bash
+npm run start
 ```
 
-## Test
+<!-- ## Migrations generate
 
 ```bash
-# unit tests
-$ npm run test
+npm run migration:generate
+``` -->
 
-# e2e tests
-$ npm run test:e2e
+## Auto-fix and format
 
-# test coverage
-$ npm run test:cov
+```bash
+npm run lint
 ```
 
-## Support
+## Settings for connection to database in .env file(can be changed)
+</br>
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+## The ADMIN role is adding to database with registration
