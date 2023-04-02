@@ -1,17 +1,20 @@
 import { NestFactory, HttpAdapterHost } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { PORT } from './common/env-variables';
 import { SwaggerModule } from '@nestjs/swagger';
 import { config } from './docs/doc-config';
 import { ValidationPipe } from '@nestjs/common/pipes';
 import { loggerWinston } from './utils/logger-winston.config';
 import { LoggingInterceptor } from './utils/logger.middleware';
 import { AllExceptionsFilter } from './exception-filters/all-exceptions.filter';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: loggerWinston,
   });
+
+  const configService = app.get(ConfigService);
+  const PORT = configService.get('PORT');
 
   app.useGlobalInterceptors(new LoggingInterceptor());
   app.enableCors();

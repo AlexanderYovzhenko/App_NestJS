@@ -19,11 +19,13 @@ import { Role } from './roles/entities/role.entity';
 import { TextBlock } from './text-block/entities/text-block.entity';
 import { UserRole } from './roles/entities/user-role.entity';
 import { File } from './file/entities/file.entity';
+import configurations from './configurations';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      load: [configurations],
       envFilePath: ['.env'],
     }),
     SequelizeModule.forRoot({
