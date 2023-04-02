@@ -18,20 +18,22 @@ export class BanGuard implements CanActivate {
       const request = context.switchToHttp().getRequest();
 
       const autHeader = request.headers.authorization || request.headers.header;
+
+      // check has autHeader
+      if (!autHeader) {
+        return true;
+      }
+
       const [type, token] = autHeader.split(' ');
 
       // check has token and type token
       if (type !== 'Bearer' || !token) {
-        throw new ForbiddenException({
-          message: 'User is banned',
-        });
+        return true;
       }
 
       // check is correct token
       const user = this.jwtService.verify(token);
       request.user = user;
-
-      console.log(user.profile.banned);
 
       const userBan = user.profile.banned;
 
