@@ -67,19 +67,15 @@ or
 npm run start
 ```
 
-<!-- ## Migrations generate
-
-```bash
-npm run migration:generate
-``` -->
-
 ## Auto-fix and format
 
 ```bash
 npm run lint
 ```
+</br>
 
 ## Settings for connection to database in .env file(can be changed)
 </br>
 
-## The ADMIN role is adding to database with registration
+## @UseGuards(RoleGuard) is documented in createRole and addRoleToUser for check application
+### (Закомментированы @UseGuards(RoleGuard) в createRole и addRoleToUser для проверки приложения)
